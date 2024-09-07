@@ -17,6 +17,7 @@ public class move : MonoBehaviour
     public float jumpTime;
     private bool isJumping;
     public GameObject platform;
+    public Animator animator;
 
 
     void Start()
@@ -29,16 +30,27 @@ public class move : MonoBehaviour
     {
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        if (moveInput > 0)
+        {
+            gameObject.transform.localScale = new Vector3(2, 2, 2);
+        }
+
+        if (moveInput < 0)
+        {
+            gameObject.transform.localScale = new Vector3(-2, 2, 2);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+        animator.SetFloat("Speed", Mathf.Abs(moveInput)); 
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
             isJumping = true;
+            animator.SetBool("IsJumping", true);
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
         }
@@ -52,6 +64,7 @@ public class move : MonoBehaviour
             else
             {
                 isJumping = false;
+                animator.SetBool("IsJumping", false);
             }
         }
         if (Input.GetKeyUp(KeyCode.Space))
