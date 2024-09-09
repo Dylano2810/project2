@@ -41,6 +41,7 @@ public class Movement : MonoBehaviour
         animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
+
     void FlipSprite()
     {
         if (isFacingRight && horizontalInput < 0f || !isFacingRight && horizontalInput > 0f)
