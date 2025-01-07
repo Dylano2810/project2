@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    private Shield shield;
     public int health;
     public int numOfHearts;
 
@@ -17,6 +18,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        shield = GetComponent<Shield>();
     }
 
     public void TakeDamage(int damage)
@@ -25,6 +27,18 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+        
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(!shield.ActiveShield)
+        {
+            if(other.tag == "Enemy")
+            {
+                TakeDamage(0);
+            }
         }
     }
 

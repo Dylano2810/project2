@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    Animator anim;
     private GameObject attackarea = default;
 
     private bool attacking = false;
@@ -16,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         attackarea = transform.GetChild(0).gameObject;
-
+        anim = GetComponent<Animator>();
         
     }
 
@@ -26,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             Attack();
+            anim.Play("Attack");
 
         }
         if(attacking)
@@ -36,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
                 timer = 0;
                 attacking = false;
                 attackarea.SetActive(attacking);
-                Debug.Log("Yes");
+                Debug.Log("Attack");
             }
         }
     }
