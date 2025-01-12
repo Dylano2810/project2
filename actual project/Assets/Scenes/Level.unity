@@ -10849,6 +10849,7 @@ GameObject:
   - component: {fileID: 1830626092}
   - component: {fileID: 1830626091}
   - component: {fileID: 1830626093}
+  - component: {fileID: 1830626094}
   m_Layer: 0
   m_Name: Flying demon
   m_TagString: Untagged
@@ -10938,6 +10939,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 8459343635366933292, guid: 7e57748299afb5945b07852d4bd3ad8c, type: 3}
   bulletpos: {fileID: 1242014420}
+--- !u!95 &1830626094
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830626090}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ccd42eec32881e347a8dc4873c560180, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1959659717
 GameObject:
   m_ObjectHideFlags: 0
