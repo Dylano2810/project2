@@ -56,6 +56,7 @@ public class move : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && isJumping == true)
         {
+            animator.SetTrigger("TakeOf");
             if (jumpTimeCounter > 0)
             {
                 rb.velocity = Vector2.up * jumpForce;
