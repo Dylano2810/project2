@@ -5,48 +5,53 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     Animator anim;
-    private GameObject attackarea = default;
+    private float timeBtwAttack;
+    public float startTimeBtwAttack;
 
-    private bool attacking = false;
-
-    private float timeToAttack = 0.25f;
-    private float timer = 0;
-
+    public Transform attackPos;
+    public LayerMask whatIsEnemies;
+    public float attackRange;
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
     {
-        attackarea = transform.GetChild(0).gameObject;
         anim = GetComponent<Animator>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if(timeBtwAttack <= 0) //then u can attack
         {
-            Attack();
-            anim.Play("Attack");
-
-        }
-        if(attacking)
-        {
-            timer += Time.deltaTime;
-            if (timer >= timeToAttack )
+            if(Input.GetKey(KeyCode.Mouse0))
             {
-                timer = 0;
-                attacking = false;
-                attackarea.SetActive(attacking);
-                Debug.Log("Attack");
+                Debug.Log("swing");
+                anim.Play("Attack");
+                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                for (int i=0; i < enemiesToDamage.Length; i++)
+                {
+                    enemiesToDamage[i].GetComponent<EnemyHealth>().TakeDamage(damage);
+                }
             }
+            timeBtwAttack = startTimeBtwAttack;
+        }
+        else
+        {
+            timeBtwAttack -= Time.deltaTime;
         }
     }
-    private void Attack()
+
+    private void OnDrawGizmosSelected()
     {
-        attacking = true;
-        attackarea.SetActive(attacking);
-       
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
-    
+
+    //if(Input.GetKeyDown(KeyCode.Mouse0))
+    //{
+    //    anim.Play("Attack");
+
+    //}
+
 }
