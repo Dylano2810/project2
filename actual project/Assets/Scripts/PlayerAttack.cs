@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask whatIsEnemies;
     public float attackRange;
     public int damage;
+    public AudioSource swing;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +23,11 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timeBtwAttack <= 0) //then u can attack
+        if(timeBtwAttack <= 0) 
         {
             if(Input.GetKey(KeyCode.Mouse0))
             {
+                swing.Play();
                 Debug.Log("swing");
                 anim.Play("Attack");
                 Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);

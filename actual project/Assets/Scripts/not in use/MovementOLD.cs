@@ -49,6 +49,7 @@ public class move : MonoBehaviour
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
+            JumpAudio.Play();
             isJumping = true;
             animator.SetBool("IsJumping", true);
             jumpTimeCounter = jumpTime;
@@ -64,6 +65,7 @@ public class move : MonoBehaviour
             }
             else
             {
+                JumpAudio.Stop();
                 isJumping = false;
                 animator.SetBool("IsJumping", false);
             }
@@ -74,4 +76,58 @@ public class move : MonoBehaviour
         }
 
     }
+
+    public AudioSource JumpAudio;
+    public AudioSource Run;
+
+    void Audio()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpAudio.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            JumpAudio.Stop();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpAudio.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            JumpAudio.Stop();
+        }
+         
+    
+         if (Input.GetKeyDown(KeyCode.D))
+        {
+            Run.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            Run.Stop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Run.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            Run.Stop();
+        }
+
+    }
+
+    // Update is called once per frame
+    void StopSound()
+    {
+
+    }
+
 }
+
+  

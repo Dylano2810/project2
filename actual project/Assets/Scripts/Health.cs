@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
+    public Animator anim;
 
     public int maxHealth = 4;
 
@@ -26,6 +27,7 @@ public class Health : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            
             Destroy(gameObject);
         }
         
