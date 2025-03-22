@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+using UnityEngine.SceneManagement;
+
 public class Health : MonoBehaviour
 {
     private Shield shield;
@@ -27,7 +30,7 @@ public class Health : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            
+            SceneManager.LoadScene("Death Screen");
             Destroy(gameObject);
         }
         

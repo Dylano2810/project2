@@ -226,31 +226,23 @@ namespace Pathfinding {
 			}
 		}
 
-		/// <summary>Called by modifiers to register themselves</summary>
+		
 		public void RegisterModifier (IPathModifier modifier) {
 			modifiers.Add(modifier);
 
-			// Sort the modifiers based on their specified order
+			
 			modifiers.Sort((a, b) => a.Order.CompareTo(b.Order));
 		}
 
-		/// <summary>Called by modifiers when they are disabled or destroyed</summary>
+		
 		public void DeregisterModifier (IPathModifier modifier) {
 			modifiers.Remove(modifier);
 		}
 
-		/// <summary>
-		/// Post Processes the path.
-		/// This will run any modifiers attached to this GameObject on the path.
-		/// This is identical to calling RunModifiers(ModifierPass.PostProcess, path)
-		/// See: RunModifiers
-		/// \since Added in 3.2
-		/// </summary>
 		public void PostProcess (Path path) {
 			RunModifiers(ModifierPass.PostProcess, path);
 		}
 
-		/// <summary>Runs modifiers on a path</summary>
 		public void RunModifiers (ModifierPass pass, Path path) {
 			if (pass == ModifierPass.PreProcess) {
 				if (preProcessPath != null) preProcessPath(path);
@@ -267,33 +259,17 @@ namespace Pathfinding {
 			}
 		}
 
-		/// <summary>
-		/// Is the current path done calculating.
-		/// Returns true if the current <see cref="path"/> has been returned or if the <see cref="path"/> is null.
-		///
-		/// Note: Do not confuse this with Pathfinding.Path.IsDone. They usually return the same value, but not always
-		/// since the path might be completely calculated, but it has not yet been processed by the Seeker.
-		///
-		/// \since Added in 3.0.8
-		/// Version: Behaviour changed in 3.2
-		/// </summary>
+		
 		public bool IsDone () {
 			return path == null || path.PipelineState >= PathState.Returned;
 		}
 
-		/// <summary>
-		/// Called when a path has completed.
-		/// This should have been implemented as optional parameter values, but that didn't seem to work very well with delegates (the values weren't the default ones)
-		/// See: OnPathComplete(Path,bool,bool)
-		/// </summary>
+
 		void OnPathComplete (Path path) {
 			OnPathComplete(path, true, true);
 		}
 
-		/// <summary>
-		/// Called when a path has completed.
-		/// Will post process it and return it by calling <see cref="tmpPathCallback"/> and <see cref="pathCallback"/>
-		/// </summary>
+		
 		void OnPathComplete (Path p, bool runModifiers, bool sendCallbacks) {
 			if (p != null && p != path && sendCallbacks) {
 				return;
@@ -303,7 +279,7 @@ namespace Pathfinding {
 				return;
 
 			if (!path.error && runModifiers) {
-				// This will send the path for post processing to modifiers attached to this Seeker
+				
 				RunModifiers(ModifierPass.PostProcess, path);
 			}
 
@@ -313,24 +289,15 @@ namespace Pathfinding {
 				lastCompletedNodePath = p.path;
 				lastCompletedVectorPath = p.vectorPath;
 
-				// This will send the path to the callback (if any) specified when calling StartPath
 				if (tmpPathCallback != null) {
 					tmpPathCallback(p);
 				}
 
-				// This will send the path to any script which has registered to the callback
 				if (pathCallback != null) {
 					pathCallback(p);
 				}
 
-				// Note: it is important that #prevPath is kept alive (i.e. not pooled)
-				// if we are drawing gizmos.
-				// It is also important that #path is kept alive since it can be returned
-				// from the GetCurrentPath method.
-				// Since #path will be copied to #prevPath it is sufficient that #prevPath
-				// is kept alive until it is replaced.
-
-				// Recycle the previous path to reduce the load on the GC
+			
 				if (prevPath != null) {
 					prevPath.Release(this, true);
 				}
